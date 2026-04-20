@@ -1,6 +1,12 @@
-import { dbConfig } from '../config/db.config.js';
+import mongoose from 'mongoose';
 
-export async function userModel(userData) {
-  const config = await dbConfig();
-  return { id: 1, email: userData.email, config, message: 'Modelo user conectado' };
-}
+const userSchema = new mongoose.Schema({
+  nombre: { type: String, required: true },
+  apellido: { type: String, required: true },
+  correo: { type: String, required: true, unique: true },
+  password: { type: String, required: true }
+});
+
+const User = mongoose.models.users || mongoose.model('users', userSchema, 'users');
+
+export default User;
