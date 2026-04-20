@@ -1,12 +1,14 @@
 import express from 'express';
-import { register, login } from '../controllers/user.controller.js';
+import { registerController } from '../controllers/auth.controller.js';
 
 const router = express.Router();
 
-// Ruta para login
-router.post('/login', login);
-
 // Ruta para registro
-router.post('/register', register);
+router.post('/register', registerController);
+
+// Ruta para login
+router.post('/login', (req, res) => {
+  res.json({ message: 'Ruta de login funcionando' });
+});
 
 export default router;

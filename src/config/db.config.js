@@ -1,3 +1,3 @@
-export const getDbConfigTest = () => {
-  return 'Configuración de base de datos de prueba';
-};
+export async function dbConfig() {
+  return 'Config DB conectada';
+}
