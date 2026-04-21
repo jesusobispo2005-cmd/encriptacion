@@ -31,12 +31,20 @@ export async function registerService(userData) {
 }
 
 export async function loginService(userData) {
+    try{
     const { email, password } = userData;
     const user = await userModel();
     const usuario=await user.findOne({email})
+    if(!usuario) return {status: 404, message:"Usuario o clave incorrecto"}
 
     return {
         status: 200,
         message: usuario
     };
+    }catch(e){
+        return{
+            status:401,
+            message:e.message
+        }
+    }
 }
