@@ -1,8 +1,12 @@
+import { validateToken } from "../services/token.service.js"
+
 export function authMiddleware(req, res, next) {
-    console.log(req.headers.authorization)
-    const token=req.headers.authorization
-    if(!token)res.status(401).send("Token invalido")
-    console.log("ahora si pasa al controlador")
-    // res.send("esto no va a pasar del middleware")
+
+    const token = req.headers.authorization
+    if (!token) res.status(401).send("Falta token")
+
+    const decodedToken = validateToken(token.replace('Bearer ', ''))
+    if (!decodedToken) res.status(401).send("Error de token")
+
     next();
 }
