@@ -63,3 +63,20 @@ export async function loginService(userData) {
         }
     }
 }
+
+export async function userInfoService(userData) {
+    const { email, password } = userData;
+    const user = await userModel();
+    const usuario = await user.findOne({ email })
+    if (!usuario) return { status: 404, message: "Usuario no encontrado" }
+
+    const userInfo = {
+        nombre: usuario.nombre,
+        apellido: usuario.apellido,
+        correo: usuario.email
+    }
+    return {
+        status:200,
+        message: userInfo
+    }
+}
