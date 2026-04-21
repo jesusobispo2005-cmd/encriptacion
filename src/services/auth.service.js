@@ -31,20 +31,26 @@ export async function registerService(userData) {
 }
 
 export async function loginService(userData) {
-    try{
-    const { email, password } = userData;
-    const user = await userModel();
-    const usuario=await user.findOne({email})
-    if(!usuario) return {status: 404, message:"Usuario o clave incorrecto"}
+    try {
+        const { email, password } = userData;
+        const user = await userModel();
+        const usuario = await user.findOne({ email })
+        // si el usuario no existe entonces retorna el 404
+        if (!usuario) return { status: 404, message: "Usuario o clave incorrecto" }
 
-    return {
-        status: 200,
-        message: usuario
-    };
-    }catch(e){
-        return{
-            status:401,
-            message:e.message
+
+        const compare = await bcrypt.compare(password, usuario.password)
+        // bcrypt compare devuelve true o false si la clave es correcta o no, si no es correcta devolvemos en la api un 404 con un mensaje ambiguo
+        if (!compare) return { status: 404, message: "Usuario o clave incorrecto" }
+
+        return {
+            status: 200,
+            message: usuario
+        };
+    } catch (e) {
+        return {
+            status: 401,
+            message: e.message
         }
     }
 }
