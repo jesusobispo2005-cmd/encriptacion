@@ -28,3 +28,11 @@ export async function registerService(userData) {
         }
     }
 }
+
+export async function loginService(userData) {
+    console.log("userData: ",userData)
+    return {
+        status: 200,
+        message: 'login service'
+    };
+}
