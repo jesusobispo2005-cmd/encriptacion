@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt'
 
 const saltRounds = 10
 
+
 export async function registerService(userData) {
     try {
         const hashedpass = await bcrypt.hash(userData.password, saltRounds);
@@ -18,21 +19,24 @@ export async function registerService(userData) {
 
         return {
             status: 201,
-            message:"usuario guardado"
+            message: "usuario guardado"
         }
     } catch (e) {
         console.log(e)
         return {
             status: 409,
-            message:"usuario NO guardado"
+            message: "usuario NO guardado"
         }
     }
 }
 
 export async function loginService(userData) {
-    console.log("userData: ",userData)
+    const { email, password } = userData;
+    const user = await userModel();
+    const usuario=await user.findOne({email})
+
     return {
         status: 200,
-        message: 'login service'
+        message: usuario
     };
 }
