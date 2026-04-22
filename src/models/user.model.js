@@ -13,6 +13,6 @@ export default async function userModel() {
 
   userSchema.index({ email: 1 }, { unique: true });
 
-  const model = mongoose.models.user || mongoose.model('user', userSchema, 'users');
+  const model = mongoose.models.user || mongoose.model('users', userSchema, 'users');
   return model;
 }
